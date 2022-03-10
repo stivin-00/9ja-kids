@@ -11,14 +11,15 @@ const userRouter = express.Router();
 
 
 
-// userRouter.get(
-//   '/seed',
-//   expressAsyncHandler(async (req, res) => {
-//     // await User.remove({});
-//     const createdUsers = await User.insertMany(data.users);
-//     res.send({ createdUsers });
-//   })
-// );
+userRouter.get(
+  '/',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const users = await User.find({});
+    res.send(users);
+  })
+);
 
 userRouter.post(
   '/signin',
@@ -55,7 +56,6 @@ userRouter.post(
       name: createdUser.name,
       email: createdUser.email,
       isAdmin: createdUser.isAdmin,
-      isSeller: user.isSeller,
       token: generateToken(createdUser),
     });
     // let mailDetails = {
