@@ -2,7 +2,7 @@ import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs';
 import User from '../models/userModel.js';
-import { generateToken, mailTransporter, orderEmailTemplate, isAdmin, isAuth } from '../utils.js';
+import { generateToken, mailTransporter, newRegisterEmailTemplate, isAdmin, isAuth } from '../utils.js';
 
 const userRouter = express.Router();
 
@@ -58,22 +58,23 @@ userRouter.post(
       isAdmin: createdUser.isAdmin,
       token: generateToken(createdUser),
     });
-    // let mailDetails = {
-    //   from: {
-    //     name: 'NO REPLY',
-    //     address: 'noreply@gmail.com'
-    //   },
-    //   to: createdUser.email,
-    //   subject: 'SIGN IN SUCCES',
-    //   html: orderEmailTemplate(createdUser),
-    // };
-//     mailTransporter.sendMail(mailDetails, function(err, data) {
-//       if(err) {
-//           console.log(err);
-//       } else {
-//           console.log(data);
-//       }
-//   });
+    let mailDetails = {
+      from: {
+        name: 'TRUE CHURCH',
+        address: 'noreply@gmail.com'
+      },
+      // admim email
+      to: "ekeleagbakwuru9@gmail.com", 
+      subject: 'REGISTRATION SUCCES',
+      html: newRegisterEmailTemplate(createdUser),
+    };
+    mailTransporter.sendMail(mailDetails, function(err, data) {
+      if(err) {
+          console.log(err);
+      } else {
+          console.log(data);
+      }
+  });
   })
 );
 

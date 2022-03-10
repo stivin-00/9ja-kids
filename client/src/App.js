@@ -13,6 +13,7 @@ function App() {
   const dispatch = useDispatch();
   const signoutHandler = () => {
     dispatch(signout());
+    window.location.reload();
   };
   return (
     <BrowserRouter>
@@ -35,7 +36,7 @@ function App() {
                 <Link className="site-title" to="/login">sign in</Link>
               </li>
               <li className="menu-item">
-                <button type="submit" onClick={signoutHandler}>
+                <button type="submit" refresh="true" onClick={signoutHandler}>
                   signout
                 </button>
               </li>
